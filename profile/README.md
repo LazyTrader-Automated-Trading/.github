@@ -18,7 +18,11 @@ echo [YOUR-PERSONAL-ACCESS-TOKEN] | docker login ghcr.io -u [YOUR-GITHUB-USERNAM
 ```
 
 ## How to run
-1. Create a `docker-compose.yml` in a directory and paste the following code inside. 
+1. Create a `docker-compose.yml` in a directory and paste the following code inside:
+
+<details>
+  <summary>Click me to show the docker-compose content</summary>
+
 ```yml
 version: "3.8"
 
@@ -112,6 +116,7 @@ volumes:
   minio_data:
     name: minio_data
 ```
+</details>
 
 2. In the same directory, open a terminal:
 ![image](https://github.com/LazyTrader-Automated-Trading/.github/assets/33746255/64c17ca5-6ce8-4d4d-88f2-ff4b1e5b91ac)
