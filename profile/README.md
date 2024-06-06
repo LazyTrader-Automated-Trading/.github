@@ -1,23 +1,37 @@
-# Release Sprint 1
+# Lazytrader
 
-## Changes
-- Fixed RabbitMQ messaging connection
-- Fixed Frontend configuration
-- MetaTrader authentication fix
-- Fixed MetaTrader startup script
-- TSS saves testresults to MongoDB
-  
+Lazytrader is an automated trading platform that allows users to upload and backtest their trading strategies.
+
+## Architecture
+The platform is built using a microservices architecture. The platform consists of the following services:
+
+- [TradingStrategyService](https://github.com/LazyTrader-Automated-Trading/TradingStrategyService) - The main Rest API service that allows users to upload their trading strategies and backtest them.
+  - **MongoDB** is used to store the trading strategies and backtest results.
+  - **Minio** is used to store the trading strategy files (blob storages).
+- [Metatrader-4](https://github.com/LazyTrader-Automated-Trading/Metatrader-4) - A service that runs the Metatrader 4 platform and exposes an API for the TradingStrategyService to interact with.
+- [Frontend](https://github.com/LazyTrader-Automated-Trading/angular-app) - The frontend application that allows users to interact with the platform (made with Angular).
+- [QuantDataService](https://github.com/LazyTrader-Automated-Trading/QuantDataService) - A service that provides historical data for the backtesting process.
+- *Rabbitmq* - A message broker that allows the TradingStrategyService to communicate with the Metatrader-4 service.
+
+Architecture Diagram:
+
+![image](./c4-lazytrader-Container%20diagram.drawio.png)
+
+
 ## Pipeline
 All images are built and pushed to GHCR (Github Container Registry).
 
 ## Prerequisites
-- Install and run Docker Desktop
-- Create a PAT (Personal Access Token) within [Github](https://github.com/settings/tokens/new) and run the following command to authenticate with GHCR:
+- Install and run Docker Desktop (or Docker Engine) on your machine.
+- Create a PAT (Personal Access Token) within [Github](https://github.com/settings/tokens/new) with the `read:packages` scope and run the following command to authenticate with GHCR:
 ```bash
 echo [YOUR-PERSONAL-ACCESS-TOKEN] | docker login ghcr.io -u [YOUR-GITHUB-USERNAMES] --password-stdin
 ```
 
 ## How to run
+
+> # IMPORTANT: Update the image tags in the docker-compose file BEFORE sprint release
+
 1. Create a `docker-compose.yml` in a directory and paste the following code inside:
 
 <details>
@@ -118,12 +132,9 @@ volumes:
 ```
 </details>
 
-2. In the same directory, open a terminal:
-![image](https://github.com/LazyTrader-Automated-Trading/.github/assets/33746255/64c17ca5-6ce8-4d4d-88f2-ff4b1e5b91ac)
-
-3. Run the following command:
+2.  In the same directory, open a terminal and Run the following command:
 ![image](https://github.com/LazyTrader-Automated-Trading/.github/assets/33746255/103346ef-9b9e-49b2-8d13-884c5bccebf4)
 
-4. To access the application, visit `http://localhost:8080`
+3. To access the application, visit `http://localhost:8080`
 
-5. To stop the app from running, run `docker-compose down`
+4. To stop the app from running, run `docker-compose down`
